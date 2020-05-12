@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Tag
+
+# Model Form Field configuration
+form: $/waka/segator/models/tag/fields.yaml
+
+# Model Class name
+modelClass: Waka\Segator\Models\Tag
+
+# Default redirect location
+defaultRedirect: waka/segator/tags
+
+# Create page
+create:
+    title: Create Tag
+    redirect: waka/segator/tags/update/:id
+    redirectClose: waka/segator/tags
+
+# Update page
+update:
+    title: Edit Tag
+    redirect: waka/segator/tags
+    redirectClose: waka/segator/tags
+
+# Preview page
+preview:
+    title: Preview Tag

@@ -1,0 +1,10 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    name:
+        label: waka.segator::lang.tag.name
+    slug:
+        label: waka.utils::lang.global.slug
+        preset: name
