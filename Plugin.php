@@ -1,8 +1,8 @@
 <?php namespace Waka\Segator;
 
 use Backend;
-use System\Classes\PluginBase;
 use Lang;
+use System\Classes\PluginBase;
 
 /**
  * Segator Plugin Information File
@@ -17,10 +17,10 @@ class Plugin extends PluginBase
     public function pluginDetails()
     {
         return [
-            'name'        => 'Segator',
+            'name' => 'Segator',
             'description' => 'No description provided yet...',
-            'author'      => 'waka',
-            'icon'        => 'icon-leaf'
+            'author' => 'waka',
+            'icon' => 'icon-leaf',
         ];
     }
 
@@ -31,6 +31,13 @@ class Plugin extends PluginBase
      */
     public function register()
     {
+    }
+
+    public function registerFormWidgets(): array
+    {
+        return [
+            'Waka\Segator\FormWidgets\TagsList' => 'tagslist',
+        ];
     }
 
     /**
@@ -88,11 +95,11 @@ class Plugin extends PluginBase
     {
         return [
             'segator' => [
-                'label'       => 'Segator',
-                'url'         => Backend::url('waka/segator/mycontroller'),
-                'icon'        => 'icon-leaf',
+                'label' => 'Segator',
+                'url' => Backend::url('waka/segator/mycontroller'),
+                'icon' => 'icon-leaf',
                 'permissions' => ['waka.segator.*'],
-                'order'       => 500,
+                'order' => 500,
             ],
         ];
     }
@@ -106,7 +113,7 @@ class Plugin extends PluginBase
                 'category' => Lang::get('waka.segator::lang.menu.settings_category'),
                 'icon' => 'icon-object-group',
                 'permissions' => ['waka.segator.admin'],
-                'url' => Backend::url('waka/segator/segments'),
+                'url' => Backend::url('waka/segator/tags'),
                 'order' => 1,
             ],
         ];

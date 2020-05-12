@@ -1,8 +1,8 @@
 <?php namespace Waka\Segator\Updates;
 
-use Schema;
 use October\Rain\Database\Schema\Blueprint;
 use October\Rain\Database\Updates\Migration;
+use Schema;
 
 class CreateTagsTable extends Migration
 {
@@ -13,15 +13,17 @@ class CreateTagsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('slug');
-            $table->string('datasource_id')->nullable();
+            $table->string('data_source_id')->nullable();
+            $table->boolean('auto_class_calculs')->default(true);
+            $table->string('class_calculs')->nullable();
             $table->string('calculs')->nullable();
             $table->boolean('is_hidden')->default(false);
-            $table->boolean('is_activ')->default(true);
-       
+            $table->boolean('is_active')->default(true);
+
             $table->integer('sort_order')->default(0);
-                                    
+
             $table->softDeletes();
-                        
+
             $table->timestamps();
         });
     }

@@ -11,6 +11,22 @@ columns:
     name:
         label: waka.segator::lang.tag.name
         searchable: true
+
+    is_active:
+        label: waka.segator::lang.tag.is_active
+        type: switch
+
+    is_hidden:
+        label: waka.segator::lang.tag.is_hidden
+        type: switch
+
+    data_source:
+        label: waka.segator::lang.tag.data_source
+        relation: data_source
+        select: name
+    
     updated_at:
         label: waka.utils::lang.global.updated_at
         type: timetense
+    
+    

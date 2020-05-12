@@ -1,1 +1,5 @@
-1.0.1: First version of Segator
+1.0.1: 
+  - 'First version of Segator'
+  - create_tags_table.php
+  - create_taggables_table.php
+

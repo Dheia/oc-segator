@@ -1,0 +1,14 @@
+<?php if($noFunction) { ?>
+<p>Auncune calcul de tag disponible</p>
+<?php } else { ?>
+<p>
+    <button href="javascript:;" class="btn btn-secondary oc-icon-files-o " data-control="popup"
+        data-handler="onShowTagCalculs">
+        Ajouter un calculs
+    </button>
+</p>
+<div id="list">
+    <?= $this->makePartial('list', ['values' => $values]) ?>
+</div>
+
+<?php } ?>

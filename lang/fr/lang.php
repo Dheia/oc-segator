@@ -9,15 +9,17 @@ return [
         'settings_category' => 'Wakaari Modèle',
         'settings_category_options' => 'Wakaari Options',
     ],
-    'segmentation' => [
+    'tag' => [
         'name' => 'Nom de la segmentation',
         'slug' => 'Slug',
-        'active' => 'Actif ?',
         'auto_create' => 'Création automatique',
         'data_source' => 'Source des données',
         'options' => 'Options',
         'data_source_placeholder' => '--Choisissez une source--',
-        'use_files' => "Utiliser des fichiers pour le montage",
+        'is_hidden' => "Caché ? ",
+        'is_active' => "Actif ?",
+        'auto_class_calculs' => "Ajouter automatiquement la class de calculs du tag",
+        'class_calculs' => "Class de calculs",
     ],
     'popup' => [
         'title' => 'Segmentation',
