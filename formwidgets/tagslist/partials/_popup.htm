@@ -7,7 +7,7 @@
         </div>
         <div class="modal-body">
             <div class="form-group dropdown-field span-full">
-                <select class="form-control custom-select" data-request="onChooseFunction" name="functionCode">
+                <select class="form-control custom-select" data-request="onChooseCalcul" name="calculCode">
                     <option value="" disabled selected>--Choisissez un calcul--</option>
                     <?php foreach($calculTagList as $key => $value)  { ?>
                     <option value="<?=$key?>"><?=$value?></option>
@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="submit" data-stripe-load-indicator data-request="onCreateTagCalculValidation"
+            <button type="submit" data-stripe-load-indicator data-request="onCreateCalculTagValidation"
                 data-request-data="redirect:0," class="btn btn-primary" data-dismiss="modal">
                 AJouter
             </button>

@@ -1,6 +1,6 @@
-<?php namespace Waka\Utils\Classes;
+<?php namespace Waka\Segator\Classes;
 
-class BaseFunction
+class BaseTag
 {
     public function setModel($model)
     {
@@ -16,12 +16,22 @@ class BaseFunction
         }
         return $data;
     }
-    public function getTagAttribute($value)
+    public function getTagCalculAttribute($value)
     {
-        $functions = $this->listFunctionAttributes();
+        $functions = $this->listTagAttributes();
         foreach ($functions as $key => $values) {
             if ($key == $value) {
                 return $values['attributes'] ?? null;
+            }
+        }
+
+    }
+    public function getTagCalculName($value)
+    {
+        $functions = $this->listTagAttributes();
+        foreach ($functions as $key => $values) {
+            if ($key == $value) {
+                return $values['name'] ?? null;
             }
         }
 

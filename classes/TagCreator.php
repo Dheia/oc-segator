@@ -10,20 +10,27 @@ class TagCreator
     private $model;
     public $classCalculs;
 
-    public function __construct(Tag $tag)
+    public function __construct()
     {
-        trace_log($tag->name);
-        $this->tag = $tag;
-        $this->model = $this->tag->data_source->modelClass;
-        if ($this->tag->auto_class_calculs) {
-            $author = $this->tag->data_source->author;
-            $plugin = $this->tag->data_source->plugin;
-            $model = $this->tag->data_source->model;
-            $this->classCalculs = '\\' . $author . '\\' . $plugin . '\\functions\\' . $model . 'Tags';
-        } else {
-            $this->classCalculs = $this->tag->classCalculs;
+
+    }
+
+    public function launch(Tag $tag)
+    {
+        $calculClass = new $tag->calculModel;
+        $calculs = $tag->calculs;
+        $ids = []; // list des ids du scope.
+        foreach ($calculs as $calcul) {
+            $calculName = $calcul['calculCode'];
+            $ids = $calculClass->{$calculName}($calcul, $ids);
         }
-        trace_log($this->classCalculs);
+        $models = new $tag->data_source->modelClass;
+        trace_log($tag->data_source->modelClass);
+        $models = $models::whereIn('id', $ids)->get();
+        foreach ($models as $model) {
+            trace_log($model->name);
+            $model->taggable()->add($tag);
+        }
     }
 
 }

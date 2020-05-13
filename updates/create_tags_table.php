@@ -16,7 +16,7 @@ class CreateTagsTable extends Migration
             $table->string('data_source_id')->nullable();
             $table->boolean('auto_class_calculs')->default(true);
             $table->string('class_calculs')->nullable();
-            $table->string('calculs')->nullable();
+            $table->text('calculs')->nullable();
             $table->boolean('is_hidden')->default(false);
             $table->boolean('is_active')->default(true);
 

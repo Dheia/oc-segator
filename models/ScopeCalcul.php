@@ -3,18 +3,15 @@
 use Model;
 
 /**
- * Tag Model
+ * ScopeFunctions Model
  */
-class Tag extends Model
+class ScopeCalcul extends Model
 {
     use \October\Rain\Database\Traits\Validation;
-    use \October\Rain\Database\Traits\SoftDelete;
-    use \October\Rain\Database\Traits\Sortable;
 
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'waka_segator_tags';
 
     /**
      * @var array Guarded fields
@@ -39,7 +36,7 @@ class Tag extends Model
     /**
      * @var array Attributes to be cast to JSON
      */
-    protected $jsonable = ['calculs'];
+    protected $jsonable = [];
 
     /**
      * @var array Attributes to be appended to the API representation of the model (ex. toArray())
@@ -57,7 +54,6 @@ class Tag extends Model
     protected $dates = [
         'created_at',
         'updated_at',
-        'deleted_at',
     ];
 
     /**
@@ -65,25 +61,11 @@ class Tag extends Model
      */
     public $hasOne = [];
     public $hasMany = [];
-    public $belongsTo = [
-        'data_source' => 'Waka\utils\Models\DataSource',
-    ];
+    public $belongsTo = [];
     public $belongsToMany = [];
     public $morphTo = [];
     public $morphOne = [];
     public $morphMany = [];
     public $attachOne = [];
     public $attachMany = [];
-
-    public function getCalculModelAttribute()
-    {
-        if ($this->auto_class_calculs) {
-            $author = $this->data_source->author;
-            $plugin = $this->data_source->plugin;
-            $model = $this->data_source->model;
-            return '\\' . $author . '\\' . $plugin . '\\functions\\' . $model . 'Tags';
-        } else {
-            return $this->tag->classCalculs;
-        }
-    }
 }
