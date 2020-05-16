@@ -29,7 +29,7 @@ class TagCreator
         $models = $models::whereIn('id', $ids)->get();
         foreach ($models as $model) {
             trace_log($model->name);
-            $model->taggable()->add($tag);
+            $model->taggables()->add($tag);
         }
     }
 
