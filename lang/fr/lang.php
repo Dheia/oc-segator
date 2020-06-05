@@ -20,6 +20,9 @@ return [
         'is_active' => "Actif ?",
         'auto_class_calculs' => "Ajouter automatiquement la class de calculs du tag",
         'class_calculs' => "Class de calculs",
+        'calculs' => "Ajouter des calculs",
+        "only_tag" => "Limité la verification au cible avec le(s) tag(s)",
+
     ],
     'popup' => [
         'title' => 'Segmentation',

@@ -39,7 +39,7 @@ class Tag extends Model
     /**
      * @var array Attributes to be cast to JSON
      */
-    protected $jsonable = ['calculs'];
+    protected $jsonable = ['calculs', 'only_tag'];
 
     /**
      * @var array Attributes to be appended to the API representation of the model (ex. toArray())
@@ -85,5 +85,10 @@ class Tag extends Model
         } else {
             return $this->tag->classCalculs;
         }
+    }
+
+    public function getTagList()
+    {
+        return Tag::lists('name', 'id');
     }
 }

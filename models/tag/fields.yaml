@@ -37,6 +37,12 @@ fields:
         label: waka.segator::lang.tag.data_source
         type: relation
         select: name
+    only_tag:
+        label: waka.segator::lang.tag.only_tag
+        type: taglist
+        mode: array
+        useKey: true
+        options: getTagList
     calculs@update:
         label: waka.segator::lang.tag.calculs
         type: tagslist
