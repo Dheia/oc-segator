@@ -32,7 +32,16 @@ class TagCreator
         //Filtrage des modèles en fonction des only_tag
         if ($tag->only_tag) {
             trace_log("il y a de l'only tag on recherche le ou les tags prescedents");
-            $ids = $models::TagFilter([$tag->only_tag])->get()->pluck('id');
+            $tagIds = [];
+            foreach ($tag->only_tag as $previousTag) {
+                $tempIds = $models::TagFilter([$previousTag])->get()->pluck('id')->toArray();
+                trace_log($tempIds);
+                if ($tempIds) {
+                    $tagIds = array_merge($tagIds, $tempIds);
+                }
+            }
+            $ids = array_unique($tagIds);
+            trace_log($ids);
         }
         foreach ($calculs as $calcul) {
             $calculName = $calcul['calculCode'];
