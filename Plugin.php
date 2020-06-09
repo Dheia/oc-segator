@@ -47,6 +47,19 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
+        \Event::listen('backend.top.index', function ($controller) {
+            $user = \BackendAuth::getUser();
+            if (!$user->hasAccess('waka.segator.admin')) {
+                return;
+            }
+            if (in_array('Waka.Segator.Behaviors.CalculTags', $controller->implement)) {
+                $data = [
+                    'model' => $modelClass = str_replace('\\', '\\\\', $controller->listGetConfig()->modelClass),
+                    //'modelId' => $controller->formGetModel()->id
+                ];
+                return \View::make('waka.segator::buttonIndexTags')->withData($data);;
+            }
+        });
     }
 
     /**
@@ -93,15 +106,7 @@ class Plugin extends PluginBase
      */
     public function registerNavigation()
     {
-        return [
-            'segator' => [
-                'label' => 'Segator',
-                'url' => Backend::url('waka/segator/mycontroller'),
-                'icon' => 'icon-leaf',
-                'permissions' => ['waka.segator.*'],
-                'order' => 500,
-            ],
-        ];
+        return [];
     }
 
     public function registerSettings()
