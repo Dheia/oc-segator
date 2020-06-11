@@ -112,7 +112,7 @@ class Plugin extends PluginBase
     public function registerSettings()
     {
         return [
-            'segator' => [
+            'tags' => [
                 'label' => Lang::get('waka.segator::lang.menu.label'),
                 'description' => Lang::get('waka.segator::lang.menu.description'),
                 'category' => Lang::get('waka.segator::lang.menu.settings_category'),

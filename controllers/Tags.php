@@ -2,6 +2,7 @@
 
 use BackendMenu;
 use Backend\Classes\Controller;
+use System\Classes\SettingsManager;
 
 /**
  * Tags Back-end Controller
@@ -27,6 +28,7 @@ class Tags extends Controller
     {
         parent::__construct();
 
-        BackendMenu::setContext('Waka.Segator', 'segator', 'tags');
+        BackendMenu::setContext('October.System', 'system', 'settings');
+        SettingsManager::setContext('Waka.Segator', 'tags');
     }
 }
