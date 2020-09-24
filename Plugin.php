@@ -115,11 +115,11 @@ class Plugin extends PluginBase
             'tags' => [
                 'label' => Lang::get('waka.segator::lang.menu.label'),
                 'description' => Lang::get('waka.segator::lang.menu.description'),
-                'category' => Lang::get('waka.segator::lang.menu.settings_category'),
+                'category' => Lang::get('waka.utils::lang.menu.settings_category_model'),
                 'icon' => 'icon-filter',
                 'permissions' => ['waka.segator.admin'],
                 'url' => Backend::url('waka/segator/tags'),
-                'order' => 1,
+                'order' => 180,
             ],
         ];
     }
