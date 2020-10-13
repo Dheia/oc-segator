@@ -1,6 +1,7 @@
 <?php namespace Waka\Segator\Classes;
 
 use Waka\Segator\Models\Tag;
+use Waka\Utils\Classes\DataSource;
 
 class TagCreator
 {
@@ -39,8 +40,8 @@ class TagCreator
         $calculClass = new $tag->calculModel;
         $calculs = $tag->calculs;
 
-        $models = new $tag->data_source->modelClass;
-
+        $ds = new DataSource($tag->data_source_id, 'id');
+        $models = new $ds->class;
         $morphName = $models->getMorphClass();
 
         //suppresion de ce tag pour tt les model de ce type
@@ -66,7 +67,7 @@ class TagCreator
             $calculName = $calcul['calculCode'];
             $ids = $calculClass->{$calculName}($calcul, $ids);
         }
-        $models = new $tag->data_source->modelClass;
+        $models = new $ds->class;
         $models = $models::whereIn('id', $ids)->get();
         foreach ($models as $model) {
             $model->taggables()->add($tag);

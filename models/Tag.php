@@ -1,6 +1,7 @@
 <?php namespace Waka\Segator\Models;
 
 use Model;
+use Waka\Utils\Classes\DataSource;
 
 /**
  * Tag Model
@@ -65,9 +66,7 @@ class Tag extends Model
      */
     public $hasOne = [];
     public $hasMany = [];
-    public $belongsTo = [
-        'data_source' => 'Waka\utils\Models\DataSource',
-    ];
+    public $belongsTo = [];
     public $belongsToMany = [];
     public $morphTo = [];
     public $morphOne = [];
@@ -78,10 +77,8 @@ class Tag extends Model
     public function getCalculModelAttribute()
     {
         if ($this->auto_class_calculs) {
-            $author = $this->data_source->author;
-            $plugin = $this->data_source->plugin;
-            $model = $this->data_source->model;
-            return '\\' . $author . '\\' . $plugin . '\\functions\\' . $model . 'Tags';
+            $ds = new DataSource($this->data_source_id, 'id');
+            return '\\' . $ds->author . '\\' . $ds->plugin . '\\functions\\' . $ds->name . 'Tags';
         } else {
             return $this->tag->classCalculs;
         }
@@ -90,5 +87,13 @@ class Tag extends Model
     public function getTagList()
     {
         return Tag::lists('name', 'id');
+    }
+
+    /**
+     * LIST
+     */
+    public function listDataSource()
+    {
+        return \Waka\Utils\Classes\DataSourceList::lists();
     }
 }

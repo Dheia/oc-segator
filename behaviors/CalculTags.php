@@ -3,6 +3,7 @@
 use Backend\Classes\ControllerBehavior;
 use Waka\Segator\Classes\TagCreator;
 use Waka\Segator\Models\Tag;
+use Waka\Utils\Classes\DataSource;
 
 class CalculTags extends ControllerBehavior
 {
@@ -15,12 +16,6 @@ class CalculTags extends ControllerBehavior
 
     }
 
-    public function getDataSourceClassName(String $model)
-    {
-        $modelClassDecouped = explode('\\', $model);
-        return array_pop($modelClassDecouped);
-    }
-
     //ci dessous tous les calculs pour permettre l'import excel.
 
     public function onCallAllCalculs($model = null)
@@ -28,12 +23,10 @@ class CalculTags extends ControllerBehavior
         if (!$model) {
             $model = post('model');
         }
+        $ds = new DataSource($model, 'class');
+        $dataSourceId = $ds->id;
 
-        $modelClassName = $this->getDataSourceClassName($model);
-
-        $allTags = Tag::whereHas('data_source', function ($query) use ($modelClassName) {
-            $query->where('model', '=', $modelClassName);
-        })->orderBy('sort_order')->get();
+        $allTags = Tag::where('data_source_id',$dataSourceId )->orderBy('sort_order')->get();
         foreach ($allTags as $tag) {
             $jobId = \Queue::push('Waka\Segator\Classes\TagCreator@fire', $tag->id);
             \Event::fire('job.create.tag', [$jobId, 'Tag en attente de calcul']);
