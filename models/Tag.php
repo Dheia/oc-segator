@@ -77,8 +77,8 @@ class Tag extends Model
     public function getCalculModelAttribute()
     {
         if ($this->auto_class_calculs) {
-            $ds = new DataSource($this->data_source_id, 'id');
-            return '\\' . $ds->author . '\\' . $ds->plugin . '\\functions\\' . $ds->name . 'Tags';
+            $ds = new DataSource($this->data_source);
+            return '\Waka\Wconfig\Fsunctions\Tags\\' . $ds->name;
         } else {
             return $this->tag->classCalculs;
         }

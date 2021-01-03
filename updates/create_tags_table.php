@@ -13,7 +13,7 @@ class CreateTagsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('slug');
-            $table->string('data_source_id')->nullable();
+            $table->string('data_source')->nullable();
             $table->boolean('auto_class_calculs')->default(true);
             $table->string('class_calculs')->nullable();
             $table->text('calculs')->nullable();
