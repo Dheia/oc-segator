@@ -16,7 +16,7 @@ class CreateTagsTableU102 extends Migration
     public function down()
     {
         Schema::table('waka_segator_tags', function (Blueprint $table) {
-            Schema::dropColumn('only_tag');
+            $table->dropColumn('only_tag');
         });
     }
 }
