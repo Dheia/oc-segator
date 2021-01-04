@@ -13,16 +13,17 @@ class CreateTagsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('slug');
-            $table->boolean('is_active')->nullable();
-            $table->boolean('is_hidden')->nullable();
-            $table->boolean('is_manual')->nullable();
-            $table->string('data_source');
-            $table->boolean('is_auto_class_calculs')->nullable();
+            $table->string('data_source')->nullable();
+            $table->boolean('auto_class_calculs')->default(true);
             $table->string('class_calculs')->nullable();
-            $table->text('parent_incs')->nullable();
             $table->text('calculs')->nullable();
-            //reorder
+            $table->boolean('is_hidden')->default(false);
+            $table->boolean('is_active')->default(true);
+
             $table->integer('sort_order')->default(0);
+
+            $table->softDeletes();
+
             $table->timestamps();
         });
     }

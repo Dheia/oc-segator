@@ -23,13 +23,13 @@ fields:
         label: waka.segator::tag.slug
         span: right
         required: true
+        preset:name
     data_source:
         label: waka.segator::tag.data_source
         span: left
         type: dropdown
         placeholder: waka.utils::lang.global.placeholder
         required: true
-        disabled: true
         options: listDataSource
     is_auto_class_calculs:
         label: waka.segator::tag.is_auto_class_calculs

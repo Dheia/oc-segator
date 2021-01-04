@@ -3,29 +3,33 @@
 # ===================================
 
 columns:
-    
-    sort_order:
-        label: waka.utils::lang.global.sort_order
-        invisible: true
-    
+
     name:
-        label: waka.segator::lang.tag.name
+        label: waka.segator::tag.name
         searchable: true
-
+    slug:
+        label: waka.segator::tag.slug
+        searchable: true
     is_active:
-        label: waka.segator::lang.tag.is_active
+        label: waka.segator::tag.is_active
         type: switch
-
     is_hidden:
-        label: waka.segator::lang.tag.is_hidden
+        label: waka.segator::tag.is_hidden
         type: switch
-
-    data_source_id:
-        label: waka.utils::lang.datasource.title
-        type: datasource
-    
+    is_manual:
+        label: waka.segator::tag.is_manual
+        type: switch
+    data_source:
+        label: waka.segator::tag.data_source
+        searchable: true
+    is_auto_class_calculs:
+        label: waka.segator::tag.is_auto_class_calculs
+        type: switch
+        invisible: true
+    class_calculs:
+        label: waka.segator::tag.class_calculs
+        searchable: true
+        invisible: true
     updated_at:
         label: waka.utils::lang.global.updated_at
         type: timetense
-    
-    

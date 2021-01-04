@@ -88,7 +88,7 @@ class Plugin extends PluginBase
                 'tab' => 'Waka - Segmentation',
                 'label' => "Super administrateur de l'outil de segmentation",
             ],
-            'waka.segator.admin' => [
+            'waka.segator.admin.base' => [
                 'tab' => 'Waka - Segmentation',
                 'label' => "Administrateur de l'outil de segmentation",
             ],

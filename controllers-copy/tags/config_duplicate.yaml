@@ -7,7 +7,7 @@
 modelClass: Waka\Segator\Models\Tag
 
 name: tags
-title: waka.utils::lang.global.duplicate_theTag
+title: waka.utils::lang.global.duplicate_the Tag
 redirect: backend/waka/segator/tags/update/
 
 duplication:
@@ -24,7 +24,7 @@ duplication:
     #Les champs qui seront modifié dans le formulaire du popup 
     fields:
         name:
-          label: waka.segator::tag.name 
+          label: waka.segator::lang.tag.name 
 
         # _keep:
         #   label: Dupliquer dans ce projet

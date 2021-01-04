@@ -9,7 +9,7 @@ list: $/waka/segator/models/tag/columns.yaml
 modelClass: Waka\Segator\Models\Tag
 
 # List Title
-title: waka.segator::tag.title
+title: Manage Tags
 
 # Link URL for each record
 recordUrl: waka/segator/tags/update/:id
@@ -29,14 +29,11 @@ showSetup: true
 # Displays the sorting link on each column
 showSorting: true
 
-
 # Default sorting column
 # defaultSort:
 #     column: created_at
 #     direction: desc
-defaultSort:
-    column: sort_order
-    direction: asc
+
 # Display checkboxes next to each record
 showCheckboxes: true
 

@@ -13,6 +13,7 @@ class CreateTaggablesTable extends Migration
             $table->integer('tag_id');
             $table->integer('taggable_id')->unsigned();
             $table->string('taggable_type');
+            $table->index(['taggable_id', 'taggable_type'], 'taggable');
         });
     }
 

@@ -3,7 +3,7 @@
 # ===================================
 
 # Record name
-name: waka.segator::tag.form_name
+name: Tag
 
 # Model Form Field configuration
 form: $/waka/segator/models/tag/fields.yaml
@@ -16,17 +16,16 @@ defaultRedirect: waka/segator/tags
 
 # Create page
 create:
-    title: waka.segator::tag.create
+    title: Create Tag
     redirect: waka/segator/tags/update/:id
     redirectClose: waka/segator/tags
-    form: $/waka/segator/models/tag/fields_create.yaml
 
 # Update page
 update:
-    title: waka.segator::tag.update
+    title: Edit Tag
     redirect: waka/segator/tags
     redirectClose: waka/segator/tags
 
 # Preview page
 preview:
-    title: waka.segator::tag.preview_name
+    title: Preview Tag

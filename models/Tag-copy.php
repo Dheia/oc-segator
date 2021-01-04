@@ -1,22 +1,21 @@
 <?php namespace Waka\Segator\Models;
 
 use Model;
+use Waka\Utils\Classes\DataSource;
 
 /**
- * tag Model
+ * Tag Model
  */
-
 class Tag extends Model
 {
     use \October\Rain\Database\Traits\Validation;
+    use \October\Rain\Database\Traits\SoftDelete;
     use \October\Rain\Database\Traits\Sortable;
-    use \Waka\Utils\Classes\Traits\DataSourceHelpers;
 
     /**
      * @var string The database table used by the model.
      */
     public $table = 'waka_segator_tags';
-
 
     /**
      * @var array Guarded fields
@@ -31,17 +30,7 @@ class Tag extends Model
     /**
      * @var array Validation rules for attributes
      */
-    public $rules = [
-        'name' => 'required',
-        'slug' => 'required|unique:waka_segator_taggs',
-        'data_source' => 'required',
-    ];
-
-    /**
-     * @var array attributes send to datasource for creating document
-     */
-    public $attributesToDs = [
-    ];
+    public $rules = [];
 
     /**
      * @var array Attributes to be cast to native types
@@ -51,16 +40,12 @@ class Tag extends Model
     /**
      * @var array Attributes to be cast to JSON
      */
-    protected $jsonable = [
-        'parent_incs',
-        'calculs',
-    ];
+    protected $jsonable = ['calculs', 'only_tag'];
 
     /**
      * @var array Attributes to be appended to the API representation of the model (ex. toArray())
      */
-    protected $appends = [
-    ];
+    protected $appends = [];
 
     /**
      * @var array Attributes to be removed from the API representation of the model (ex. toArray())
@@ -73,57 +58,42 @@ class Tag extends Model
     protected $dates = [
         'created_at',
         'updated_at',
+        'deleted_at',
     ];
 
     /**
      * @var array Relations
      */
     public $hasOne = [];
-    public $hasMany = [
-    ];
-    public $hasOneThrough = [];
-    public $hasManyThrough = [
-        
-    ];
-    public $belongsTo = [
-    ];
+    public $hasMany = [];
+    public $belongsTo = [];
     public $belongsToMany = [];
     public $morphTo = [];
-    public $morphOne = [
-    ];
-    public $morphMany = [
-    ];
-    public $attachOne = [
-    ];
-    public $attachMany = [
-    ];
+    public $morphOne = [];
+    public $morphMany = [];
+    public $attachOne = [];
+    public $attachMany = [];
+
+    public function getCalculModelAttribute()
+    {
+        if ($this->is_auto_class_calculs) {
+            $ds = new DataSource($this->data_source);
+            return '\Waka\Wconfig\Fsunctions\Tags\\' . $ds->name;
+        } else {
+            return $this->tag->class_calculs;
+        }
+    }
+
+    public function getTagList()
+    {
+        return Tag::lists('name', 'id');
+    }
 
     /**
-     *EVENTS
-     **/
-
-    /**
-     * LISTS
-     **/
-
-    /**
-     * GETTERS
-     **/
-
-    /**
-     * SCOPES
+     * LIST
      */
-
-    /**
-     * SETTERS
-     */
- 
-    /**
-     * FILTER FIELDS
-     */
-
-    /**
-     * OTHERS
-     */
-    
+    public function listDataSource()
+    {
+        return \Waka\Utils\Classes\DataSourceList::lists();
+    }
 }
