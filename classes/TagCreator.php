@@ -70,7 +70,7 @@ class TagCreator
         $models = new $ds->class;
         $models = $models::whereIn('id', $ids)->get();
         foreach ($models as $model) {
-            $model->taggables()->add($tag);
+            $model->wakatags()->add($tag);
         }
     }
 

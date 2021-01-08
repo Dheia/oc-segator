@@ -36,7 +36,7 @@ class Plugin extends PluginBase
     public function registerFormWidgets(): array
     {
         return [
-            'Waka\Segator\FormWidgets\TagsList' => 'tagslist',
+            'Waka\Segator\FormWidgets\TagsList' => 'tagscalcullist',
         ];
     }
 

@@ -15,11 +15,12 @@ class CreateTagsTable extends Migration
             $table->string('slug');
             $table->boolean('is_active')->nullable();
             $table->boolean('is_hidden')->nullable();
-            $table->boolean('is_manual')->nullable();
             $table->string('data_source');
+            $table->boolean('is_manual')->nullable();
             $table->boolean('is_auto_class_calculs')->nullable();
             $table->string('class_calculs')->nullable();
             $table->text('parent_incs')->nullable();
+            $table->text('parent_excs')->nullable();
             $table->text('calculs')->nullable();
             //reorder
             $table->integer('sort_order')->default(0);

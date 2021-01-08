@@ -8,6 +8,7 @@ return [
         'settings_description' => "Réglage des valeurs par defaut",
         'settings_category' => 'Wakaari Modèle',
         'settings_category_options' => 'Wakaari Options',
+        "calcul_btn" => "Calculer le Tag",
     ],
     'tag' => [
         'name' => 'Nom de la segmentation',

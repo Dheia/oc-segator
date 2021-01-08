@@ -1,6 +1,7 @@
 <?php namespace Waka\Segator\Models;
 
 use Model;
+use Waka\Utils\Classes\DataSource;
 
 /**
  * tag Model
@@ -17,7 +18,6 @@ class Tag extends Model
      */
     public $table = 'waka_segator_tags';
 
-
     /**
      * @var array Guarded fields
      */
@@ -33,7 +33,7 @@ class Tag extends Model
      */
     public $rules = [
         'name' => 'required',
-        'slug' => 'required|unique:waka_segator_taggs',
+        'slug' => 'required|unique:waka_segator_tags',
         'data_source' => 'required',
     ];
 
@@ -83,7 +83,7 @@ class Tag extends Model
     ];
     public $hasOneThrough = [];
     public $hasManyThrough = [
-        
+
     ];
     public $belongsTo = [
     ];
@@ -105,6 +105,14 @@ class Tag extends Model
     /**
      * LISTS
      **/
+    public function getTagList()
+    {
+        return Tag::where('id', '!=', $this->id)->lists('name', 'id');
+    }
+    public function getAutoTagList()
+    {
+        return Tag::where('is_manual', false)->where('data_source', $this->data_source)->lists('name', 'id');
+    }
 
     /**
      * GETTERS
@@ -117,7 +125,7 @@ class Tag extends Model
     /**
      * SETTERS
      */
- 
+
     /**
      * FILTER FIELDS
      */
@@ -125,5 +133,14 @@ class Tag extends Model
     /**
      * OTHERS
      */
-    
+    public function getCalculModelAttribute()
+    {
+        if ($this->is_auto_class_calculs) {
+            $ds = new DataSource($this->data_source);
+            return '\Waka\Wconfig\Functions\Tags\\' . $ds->name . 'Tags';
+        } else {
+            return $this->class_calculs;
+        }
+    }
+
 }

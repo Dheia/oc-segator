@@ -13,7 +13,7 @@ trait TagTrait
             /*
              * Define relationships
              */
-            $model->morphToMany['tags'] = [
+            $model->morphToMany['wakatags'] = [
                 'Waka\Segator\Models\Tag',
                 'name' => 'taggable',
                 'table' => 'waka_segator_taggables',
@@ -36,7 +36,7 @@ trait TagTrait
      */
     public function scopeTagFilter($query, $filtered)
     {
-        return $query->whereHas('tags', function ($q) use ($filtered) {
+        return $query->whereHas('wakatags', function ($q) use ($filtered) {
             $q->whereIn('tag_id', $filtered);
         });
     }

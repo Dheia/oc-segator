@@ -92,14 +92,7 @@ class TagsList extends FormWidgetBase
         if ($attributes) {
             foreach ($attributes as $key => $value) {
                 //trace_log($value['options'] ?? null);
-                $attributeWidget->addFields([
-                    $key => [
-                        'label' => $value['label'],
-                        'type' => $value['type'],
-                        'options' => $value['options'] ?? null,
-                        'useKey' => true,
-                    ],
-                ]);
+                $attributeWidget->addFields([$key => $value]);
             }
 
         }
@@ -116,17 +109,18 @@ class TagsList extends FormWidgetBase
 
     public function onCreateCalculTagValidation()
     {
+        $uniqueId = uniqid();
         //mis d'en une collection des données existantes
         //trace_log(post());
         $data;
         $modelValues = $this->getLoadValue();
         if ($modelValues && count($modelValues)) {
             $datas = new \October\Rain\Support\Collection($modelValues);
-            foreach ($datas as $key => $data) {
-                if ($data['calculCode'] == post('calculCode')) {
-                    throw new \ApplicationException('Il existe déjà un calcul de ce type. ');
-                }
-            }
+            // foreach ($datas as $key => $data) {
+            //     if ($data['calculCode'] == post('calculCode')) {
+            //         throw new \ApplicationException('Il existe déjà un calcul de ce type. ');
+            //     }
+            // }
 
         } else {
             $datas = new \October\Rain\Support\Collection();
@@ -136,6 +130,7 @@ class TagsList extends FormWidgetBase
         $widgetArray = post('attributes_array');
         //ajout du code qui n'est pas dans le widget_array
         $widgetArray['calculCode'] = post('calculCode');
+        $widgetArray['tagId'] = $uniqueId;
         $datas->push($widgetArray);
 
         //enregistrement du model
@@ -152,12 +147,16 @@ class TagsList extends FormWidgetBase
     public function onUpdateFunction()
     {
 
-        $calculCode = post('calculCode');
+        $tagId = post('tagId');
 
         $modelValues = $this->getLoadValue();
         //trace_log($modelValues);
         $datas = new \October\Rain\Support\Collection($modelValues);
-        $data = $datas->where('calculCode', $calculCode)->first();
+        $data = $datas->where('tagId', $tagId)->first();
+
+        //trace_log($data);
+
+        $calculCode = $data['calculCode'];
 
         $classCalculs = new $this->model->calculModel;
         $attributes = $classCalculs->getTagCalculAttribute($calculCode);
@@ -170,15 +169,9 @@ class TagsList extends FormWidgetBase
 
         if ($attributes) {
             foreach ($attributes as $key => $value) {
-                $attributeWidget->addFields([
-                    $key => [
-                        'label' => $value['label'],
-                        'type' => $value['type'],
-                        'options' => $value['options'] ?? null,
-                        'useKey' => true,
-                    ],
-                ]);
-                if ($value['type'] == 'taglist') {
+                $attributeWidget->addFields([$key => $value]);
+                $type = $value['type'] ?? false;
+                if ($type == 'taglist') {
                     $val = $data[$key] ?? [];
                     $attributeWidget->getField($key)->value = implode(",", $val);
                 } else {
@@ -191,6 +184,7 @@ class TagsList extends FormWidgetBase
 
         $this->vars['calculCode'] = $calculCode;
         $this->vars['attributeWidget'] = $attributeWidget;
+        $this->vars['tagId'] = $tagId;
 
         return $this->makePartial('popup_update');
 
@@ -199,12 +193,12 @@ class TagsList extends FormWidgetBase
     public function onDeleteFunction()
     {
 
-        $calculCode = post('calculCode');
+        $tagId = post('tagId');
         $datas = $this->getLoadValue();
 
         $updatedDatas = [];
         foreach ($datas as $key => $data) {
-            if ($data['calculCode'] != $calculCode) {
+            if ($data['tagId'] != $tagId) {
                 $updatedDatas[$key] = $data;
             }
         }
@@ -222,9 +216,10 @@ class TagsList extends FormWidgetBase
 
     public function onUpdateTagCalculValidation()
     {
+        $tagId = post('tagId');
         $calculCode = post('calculCode');
 
-        if (!$calculCode) {
+        if (!$tagId) {
             return;
         }
 
@@ -234,9 +229,10 @@ class TagsList extends FormWidgetBase
         //preparatio de l'array a ajouter
         $widgetArray = post('attributes_array');
         $widgetArray['calculCode'] = $calculCode;
+        $widgetArray['tagId'] = $tagId;
 
         foreach ($datas as $key => $data) {
-            if ($data['calculCode'] == $calculCode) {
+            if ($data['tagId'] == $tagId) {
                 $datas[$key] = $widgetArray;
             }
         }

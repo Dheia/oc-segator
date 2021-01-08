@@ -7,13 +7,10 @@ fields:
         label: waka.segator::tag.is_active
         span: left
         type: switch
+        default: true
     is_hidden:
         label: waka.segator::tag.is_hidden
-        span: left
-        type: switch
-    is_manual:
-        label: waka.segator::tag.is_manual
-        span: left
+        span: right
         type: switch
     name:
         label: waka.segator::tag.name
@@ -23,6 +20,7 @@ fields:
         label: waka.segator::tag.slug
         span: right
         required: true
+        preset: name
     data_source:
         label: waka.segator::tag.data_source
         span: left
@@ -31,33 +29,55 @@ fields:
         required: true
         disabled: true
         options: listDataSource
+    is_manual:
+        label: waka.segator::tag.is_manual
+        span: left
+        type: switch
     is_auto_class_calculs:
         label: waka.segator::tag.is_auto_class_calculs
         span: left
         type: switch
+        default: true
         trigger:
-            action: show
+            action: hide
             field: is_manual
             condition: checked
     class_calculs:
         label: waka.segator::tag.class_calculs
         span: right
         trigger:
-            action: show
-            field: is_manual
+            action: hide
+            field: is_auto_class_calculs
             condition: checked
     parent_incs:
         label: waka.segator::tag.parent_incs
         span: full
         type: taglist
-        options: ['1','2']
+        mode: array
+        useKey: true
+        options: getTagList
+        trigger:
+            action: hide
+            field: is_manual
+            condition: checked
         commentAbove: waka.segator::tag.parent_incs_com
     parent_excs:
         label: waka.segator::tag.parent_excs
-        span: auto
+        span: full
+        type: taglist
+        mode: array
+        useKey: true
+        options: getTagList
+        trigger:
+            action: hide
+            field: is_manual
+            condition: checked
         commentAbove: waka.segator::tag.parent_excs_com
     calculs:
         label: waka.segator::tag.calculs
         span: full
-        type: taglist
-        options: ['1','2']
+        type: tagscalcullist
+        trigger:
+            action: hide
+            field: is_manual
+            condition: checked

@@ -24,9 +24,9 @@ class CalculTags extends ControllerBehavior
             $model = post('model');
         }
         $ds = new DataSource($model, 'class');
-        $dataSourceId = $ds->id;
+        $dataSourceCode = $ds->code;
 
-        $allTags = Tag::where('data_source_id',$dataSourceId )->orderBy('sort_order')->get();
+        $allTags = Tag::where('data_source', $dataSourceCode)->orderBy('sort_order')->get();
         foreach ($allTags as $tag) {
             $jobId = \Queue::push('Waka\Segator\Classes\TagCreator@fire', $tag->id);
             \Event::fire('job.create.tag', [$jobId, 'Tag en attente de calcul']);
