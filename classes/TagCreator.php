@@ -50,10 +50,10 @@ class TagCreator
         $ids = []; // list des ids du scope. il va diminuer à chaque calcul + l'only tag initial si existe.
 
         //Filtrage des modèles en fonction des parents
-        if ($tag->parents) {
+        if ($tag->parent_incs) {
             //trace_log("il y a de l'only tag on recherche le ou les tags prescedents");
             $tagIds = [];
-            foreach ($tag->parents as $previousTag) {
+            foreach ($tag->parent_incs as $previousTag) {
                 $tempIds = $models::TagFilter([$previousTag])->get()->pluck('id')->toArray();
                 //trace_log($tempIds);
                 if ($tempIds) {
@@ -61,7 +61,6 @@ class TagCreator
                 }
             }
             $ids = array_unique($tagIds);
-            //trace_log($ids);
         }
         foreach ($calculs as $calcul) {
             $calculName = $calcul['calculCode'];

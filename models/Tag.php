@@ -88,7 +88,9 @@ class Tag extends Model
     public $belongsTo = [
     ];
     public $belongsToMany = [];
-    public $morphTo = [];
+    public $morphTo = [
+        'taggable' => ['delete' => true],
+    ];
     public $morphOne = [
     ];
     public $morphMany = [

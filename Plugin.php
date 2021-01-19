@@ -117,7 +117,7 @@ class Plugin extends PluginBase
                 'description' => Lang::get('waka.segator::lang.menu.description'),
                 'category' => Lang::get('waka.utils::lang.menu.settings_category_model'),
                 'icon' => 'icon-filter',
-                'permissions' => ['waka.segator.admin'],
+                'permissions' => ['waka.segator.admin.*'],
                 'url' => Backend::url('waka/segator/tags'),
                 'order' => 180,
             ],
