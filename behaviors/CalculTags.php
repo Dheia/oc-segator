@@ -27,7 +27,7 @@ class CalculTags extends ControllerBehavior
         $dataSourceCode = $ds->code;
 
         $allTagsId = Tag::where('data_source', $dataSourceCode)->orderBy('sort_order')->pluck('id');
-        trace_log($allTagsId);
+        //trace_log($allTagsId);
         foreach ($allTagsId as $tagId) {
             $tag = TagCreator::find($tagId)->calculate();
         }
