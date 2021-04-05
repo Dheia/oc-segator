@@ -47,19 +47,19 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
-        \Event::listen('backend.top.index', function ($controller) {
-            $user = \BackendAuth::getUser();
-            if (!$user->hasAccess('waka.segator.admin')) {
-                return;
-            }
-            if (in_array('Waka.Segator.Behaviors.CalculTags', $controller->implement)) {
-                $data = [
-                    'model' => $modelClass = str_replace('\\', '\\\\', $controller->listGetConfig()->modelClass),
-                    //'modelId' => $controller->formGetModel()->id
-                ];
-                return \View::make('waka.segator::buttonIndexTags')->withData($data);;
-            }
-        });
+        // \Event::listen('backend.top.index', function ($controller) {
+        //     $user = \BackendAuth::getUser();
+        //     if (!$user->hasAccess('waka.segator.admin')) {
+        //         return;
+        //     }
+        //     if (in_array('Waka.Segator.Behaviors.CalculTags', $controller->implement)) {
+        //         $data = [
+        //             'model' => $modelClass = str_replace('\\', '\\\\', $controller->listGetConfig()->modelClass),
+        //             //'modelId' => $controller->formGetModel()->id
+        //         ];
+        //         return \View::make('waka.segator::buttonIndexTags')->withData($data);;
+        //     }
+        // });
     }
 
     /**

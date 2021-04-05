@@ -33,7 +33,7 @@ fields:
             condition: unchecked
         span: auto
         
-    data_source_id@create:
+    data_sourced@create:
             label: waka.utils::lang.datasource.title
             placeholder: waka.utils::lang.datasource.placeholder
             type: dropdown

@@ -1,10 +1,7 @@
 <?php namespace Waka\Segator\Classes;
 
-
-use ApplicationException;
-use Event;
-use Waka\Utils\Classes\DataSource;
 use Waka\Segator\Models\Tag;
+use Waka\Utils\Classes\DataSource;
 
 class TagCreator
 {
@@ -13,49 +10,51 @@ class TagCreator
     private $dataSourceId;
     private $model;
     public $classCalculs;
-    private static $tag;
 
-    public static function find($tag_id, $slug = false)
+    public function __construct()
     {
-        $tag = null;
-        if ($slug) {
-            $tag = Tag::where('slug', $tag_id)->first();
-            if (!$tag) {
-                throw new ApplicationException("TagCreator::find => Le code tag ne fonctionne pas : " . $tag_id);
-            }
-        } else {
-            $tag = Tag::find($tag_id);
+
+    }
+
+    public function launch(Tag $tag)
+    {
+        $this->handle($tag);
+    }
+
+    public function fire($job, $tagId)
+    {
+
+        $tag = Tag::find($tagId);
+        \Event::fire('job.start.tag', [$job, 'Tag : ' . $tag->name]);
+        $this->handle($tag);
+
+        if ($job) {
+            \Event::fire('job.end.tag', [$job]);
+            $job->delete();
         }
-        self::$tag = $tag;
-        return new self;
+
     }
-    public static function getProductor()
+
+    public function handle(Tag $tag)
     {
-        return self::$tag;
-    }
-
-    public function calculate($onlyId = false) {
-
-        //Pour l'instant $onlyId ne fonctionne pas il permetra de travailler sur une selection de modèle.
-        
-        $tag = $this->getProductor();
         $calculClass = new $tag->calculModel;
         $calculs = $tag->calculs;
 
-        $ds = new DataSource($tag->data_source);
-        $modelClass = new $ds->class;
-        $morphName = $modelClass->getMorphClass();
+        $ds = new DataSource($tag->data_source_id, 'id');
+        $models = new $ds->class;
+        $morphName = $models->getMorphClass();
 
         //suppresion de ce tag pour tt les model de ce type
         \DB::table('waka_segator_taggables')->where('taggable_type', $morphName)->where('tag_id', $tag->id)->delete();
 
         $ids = []; // list des ids du scope. il va diminuer à chaque calcul + l'only tag initial si existe.
 
+        //Filtrage des modèles en fonction des parents
         if ($tag->parent_incs) {
             //trace_log("il y a de l'only tag on recherche le ou les tags prescedents");
             $tagIds = [];
             foreach ($tag->parent_incs as $previousTag) {
-                $tempIds = $modelClass::TagFilter([$previousTag])->get()->pluck('id')->toArray();
+                $tempIds = $models::TagFilter([$previousTag])->get()->pluck('id')->toArray();
                 //trace_log($tempIds);
                 if ($tempIds) {
                     $tagIds = array_merge($tagIds, $tempIds);
@@ -67,8 +66,8 @@ class TagCreator
             $calculName = $calcul['calculCode'];
             $ids = $calculClass->{$calculName}($calcul, $ids);
         }
-
-        $models = $modelClass::whereIn('id', $ids)->get();
+        $models = new $ds->class;
+        $models = $models::whereIn('id', $ids)->get();
         foreach ($models as $model) {
             $model->wakatags()->add($tag);
         }

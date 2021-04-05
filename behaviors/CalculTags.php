@@ -18,20 +18,32 @@ class CalculTags extends ControllerBehavior
 
     //ci dessous tous les calculs pour permettre l'import excel.
 
-    public function onCallAllCalculs($model = null)
+    public function onCallTagCalculsModel($model = null)
     {
         if (!$model) {
-            $model = post('model');
+            $modelClass = post('modelClass');
         }
-        $ds = new DataSource($model, 'class');
+        $ds = new DataSource($modelClass, 'class');
         $dataSourceCode = $ds->code;
 
-        $allTags = Tag::where('data_source', $dataSourceCode)->orderBy('sort_order')->get();
-        foreach ($allTags as $tag) {
-            $jobId = \Queue::push('Waka\Segator\Classes\TagCreator@fire', $tag->id);
-            \Event::fire('job.create.tag', [$jobId, 'Tag en attente de calcul']);
+        $allTagsId = Tag::where('data_source', $dataSourceCode)->orderBy('sort_order')->pluck('id');
+        trace_log($allTagsId);
+        foreach ($allTagsId as $tagId) {
+            $tag = TagCreator::find($tagId)->calculate();
         }
-        \Flash::info("Le calcul des tags est en cours, vous pouvez verifier la progression des calculs dans REGLAGES->TACHES");
+        return $this->makePartial('$/waka/segator/behaviors/calcultags/_confirm.htm');
+
+        //\Flash::info("Le calcul des tags est en cours, vous pouvez verifier la progression des calculs dans REGLAGES->TACHES");
+
+    }
+
+    public function onCallTagCalculsAll($model = null)
+    {
+        $allTags = Tag::orderBy('sort_order')->pluck('id');
+        foreach ($allTags as $tag) {
+            $tag = TagCreator::find($tag->id)->calculate();
+        }
+        //\Flash::info("Le calcul des tags est en cours, vous pouvez verifier la progression des calculs dans REGLAGES->TACHES");
 
     }
 

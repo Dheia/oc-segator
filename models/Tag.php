@@ -139,7 +139,7 @@ class Tag extends Model
     {
         if ($this->is_auto_class_calculs) {
             $ds = new DataSource($this->data_source);
-            return '\Waka\Wconfig\Functions\Tags\\' . $ds->name . 'Tags';
+            return '\Wcli\Wconfig\Functions\Tags\\' . $ds->name . 'Tags';
         } else {
             return $this->class_calculs;
         }
