@@ -54,8 +54,7 @@ class CalculTags extends ControllerBehavior
 
         $tag = Tag::find($model_id);
 
-        $calc = new TagCreator();
-        $calc = $calc->launch($tag);
+        TagCreator::find($tag->id)->calculate();
 
     }
 
