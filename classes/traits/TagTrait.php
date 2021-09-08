@@ -1,6 +1,6 @@
 <?php namespace Waka\Segator\Classes\Traits;
 
-use \Waka\Informer\Models\Inform;
+use Waka\Segator\Models\Tag;
 
 trait TagTrait
 {
