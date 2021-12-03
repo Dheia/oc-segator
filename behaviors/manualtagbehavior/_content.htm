@@ -1,0 +1,16 @@
+<?= Form::open() ?>
+<div class="report-widget loading-indicator-container">
+    <h5>Ajouter/Enlever des tags</h5>
+    <div class="p-t-md">
+        <input id="modelClass" name="modelClass" type="hidden" value="<?=$modelClass?>">
+        <?= $tagBehaviorWidget->render() ?>
+    </div>
+    <button type="submit"
+            data-request="onTagBehaviorValidate"
+            data-request-data="redirect:0"
+            data-popup-load-indicator
+            class="btn btn-primary">
+        <?=e(trans('waka.utils::lang.global.validate'))?>
+    </button>
+</div>
+<?= Form::close() ?>

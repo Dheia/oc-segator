@@ -1,0 +1,21 @@
+# ===================================
+#  List Column Definitions
+# ===================================
+
+fields:
+    add_remove:
+        label: Ajouter ou supprimer
+        type: radio
+        options:
+            add: Ajout
+            remove: Enlever
+        default: add
+    tagList:
+        label: Choisissez un tag manuel
+        invisible: true
+        type: taglist
+        mode: array
+        useKey: true
+        options: getManualTagList
+    
+    

@@ -36,6 +36,9 @@ trait TagTrait
      */
     public function scopeTagFilter($query, $filtered)
     {
+        if(is_string($filtered)) {
+            $filtered = [$filtered];
+        }
         return $query->whereHas('wakatags', function ($q) use ($filtered) {
             $q->whereIn('tag_id', $filtered);
         });
@@ -46,16 +49,30 @@ trait TagTrait
      */
     public function getTagList()
     {
-        return Tag::lists('name', 'id');
+        $class = get_class($this);
+        $dsCode = \Datasources::findByClass($class)->code;
+        trace_log('coucou');
+        trace_log($dsCode);
+        $tags = Tag::where('is_manual', true)->where('data_source', $dsCode);
+        if($tags) {
+            return $tags->lists('name', 'id');
+        } else {
+            return [];
+        }
     }
 
     public function getManualTagList()
     {
-        return Tag::where('is_manual', true)->lists('name', 'id');
+        $class = get_class($this);
+        $dsCode = \Datasources::findByClass($class)->code;
+        trace_log("coucou");
+        return Tag::where('is_manual', true)->where('data_source', $dsCode)->lists('name', 'id');
     }
     public function getAutoTagList()
     {
-        return Tag::where('is_manual', false)->where('data_source', $this->data_source)->lists('name', 'id');
+        $class = get_class($this);
+        $dsCode = \Datasources::findByClass($class)->code;
+        return Tag::where('is_manual', false)->where('data_source', $dsCode)->lists('name', 'id');
     }
 
 }

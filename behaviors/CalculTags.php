@@ -13,7 +13,6 @@ class CalculTags extends ControllerBehavior
     {
         parent::__construct($controller);
         $this->model = $controller->formGetModel();
-
     }
 
     //ci dessous tous les calculs pour permettre l'import excel.
@@ -32,9 +31,6 @@ class CalculTags extends ControllerBehavior
             $tag = TagCreator::find($tagId)->calculate();
         }
         return $this->makePartial('$/waka/segator/behaviors/calcultags/_confirm.htm');
-
-        //\Flash::info("Le calcul des tags est en cours, vous pouvez verifier la progression des calculs dans REGLAGES->TACHES");
-
     }
 
     public function onCallTagCalculsAll($model = null)
@@ -43,7 +39,6 @@ class CalculTags extends ControllerBehavior
         foreach ($allTags as $tag) {
             $tag = TagCreator::find($tag->id)->calculate();
         }
-        //\Flash::info("Le calcul des tags est en cours, vous pouvez verifier la progression des calculs dans REGLAGES->TACHES");
 
     }
 
@@ -51,11 +46,11 @@ class CalculTags extends ControllerBehavior
     {
 
         $model_id = post('model_id');
-
         $tag = Tag::find($model_id);
-
         TagCreator::find($tag->id)->calculate();
 
     }
+
+
 
 }

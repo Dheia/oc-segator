@@ -33,6 +33,22 @@ class Plugin extends PluginBase
     {
     }
 
+
+    public function registerListColumnTypes()
+    {
+        return [
+            'wakatags' => function ($value)  {
+                    $val = $value->pluck('slug')->toArray();
+                    if($val != []) {
+                        trace_log($val);
+                        return implode(',',$val);
+                    } else {
+                        return null;
+                    }
+            },
+        ];
+    }
+
     public function registerFormWidgets(): array
     {
         return [

@@ -19,5 +19,11 @@ return [
             'ajaxCaller' => 'onCallTagCalculsAll',
             'icon' => 'oc-icon-filter',
         ],
+        'lot_tag' => [
+            'label' => 'Ajouter/Enlever tag',
+            'class' => 'btn-secondary',
+            'ajaxInlineCaller' => 'onLoadTagBehaviorContentForm',
+            'icon' => 'oc-icon-filter',
+        ],
     ],
 ];
