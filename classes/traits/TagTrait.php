@@ -50,7 +50,7 @@ trait TagTrait
             $filtered = [$filtered];
         }
         return $query->whereHas('wakatags', function ($q) use ($filtered) {
-            trace_log($filtered);
+            //trace_log($filtered);
             $q->whereNotIn('tag_id', $filtered);
         })->orDoesntHave('wakatags');
     }

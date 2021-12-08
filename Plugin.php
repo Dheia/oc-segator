@@ -40,7 +40,7 @@ class Plugin extends PluginBase
             'wakatags' => function ($value)  {
                     $val = $value->pluck('slug')->toArray();
                     if($val != []) {
-                        trace_log($val);
+                        //trace_log($val);
                         return implode(',',$val);
                     } else {
                         return null;
