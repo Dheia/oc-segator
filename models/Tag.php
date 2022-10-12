@@ -54,6 +54,7 @@ class Tag extends Model
     protected $jsonable = [
         'parent_incs',
         'calculs',
+        'parent_excs'
     ];
 
     /**
